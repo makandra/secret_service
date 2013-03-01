@@ -15,7 +15,7 @@ namespace :travis_ci do
 
   desc 'Creates a test database'
   task :create_database do
-    system("mysql -e 'create database dusen_test;'")
+    system("mysql -e 'create database secret_service_test;'")
   end
 
   desc 'Creates a database.yml'
