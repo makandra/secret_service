@@ -6,6 +6,7 @@ module SecretService
     if options[:plain]
       source_secret
     else
+      @secrets ||= {}
       @secrets[source_secret] ||= Store.instance.get(source_secret)
     end
   end

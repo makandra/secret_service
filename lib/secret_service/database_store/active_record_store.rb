@@ -4,7 +4,11 @@ module SecretService
       TABLE_NAME = '_secret_service_secrets'
 
       class Secret < ::ActiveRecord::Base
-        set_table_name TABLE_NAME
+        if respond_to? :table_name=
+          self.table_name = TABLE_NAME
+        else
+          set_table_name TABLE_NAME
+        end
       end
 
 
@@ -19,12 +23,19 @@ module SecretService
           begin
             secret_record = Secret.create!(:key => key, :value => new_secret)
           rescue ::ActiveRecord::StatementInvalid
-            # concurrency issue, someone else won
             secret_record = find_if_present(key)
           end
         end
         secret_record.value
       end
+
+      def drop_database
+        # tests need this
+        Secret.connection.drop_table TABLE_NAME
+        Secret.reset_column_information
+      rescue ::ActiveRecord::StatementInvalid
+      end
+
 
       private
 
@@ -36,7 +47,6 @@ module SecretService
         end
         Secret.connection.add_index TABLE_NAME, :key, :unique => true
       rescue ::ActiveRecord::StatementInvalid
-        # concurrency issue, can be ignored
       end
 
       def database_set_up?

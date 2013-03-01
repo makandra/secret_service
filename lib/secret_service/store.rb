@@ -2,6 +2,7 @@ require 'secret_service/database_store'
 
 require 'securerandom'
 require 'singleton'
+require 'gibberish'
 
 module SecretService
   class Store
@@ -24,7 +25,7 @@ module SecretService
     end
 
     def hash(value)
-      Gibberish::SAH256(value)
+      Gibberish::SHA256(value)
     end
 
     def generate_secret
