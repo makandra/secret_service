@@ -1,6 +1,6 @@
 # SecretService
 
-TODO: Write a gem description
+SecretService are better secrets for Rails.
 
 ## Installation
 
