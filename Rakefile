@@ -34,7 +34,7 @@ namespace :all do
     success = true
     for_each_directory_of('spec/**/Rakefile') do |directory|
       env = "SPEC=../../#{ENV['SPEC']} " if ENV['SPEC']
-      success &= system("cd #{directory} && #{env} bundle exec rake spec")
+      success &= system("cd #{directory} && BUNDLE_GEMFILE=./Gemfile #{env} bundle exec rake spec")
     end
     fail "Tests failed" unless success
   end
