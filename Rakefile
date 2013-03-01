@@ -21,7 +21,7 @@ namespace :travis_ci do
   desc 'Creates a database.yml'
   task :create_database_yml do
     config_dir = "spec/shared/app_root/config"
-    system("cp #{config_dir}/database.sample.yml #{config_dir}/database.yml")
+    system("cp #{config_dir}/database.yml.sample #{config_dir}/database.yml")
   end
 
 end
@@ -42,7 +42,7 @@ namespace :all do
   desc "Bundle all spec apps"
   task :bundle do
     for_each_directory_of('spec/**/Gemfile') do |directory|
-      system("cd #{directory} && rm -f Gemfile.lock && bundle install")
+      system("cd #{directory} && BUNDLE_GEMFILE=./Gemfile bundle install")
     end
   end
 
