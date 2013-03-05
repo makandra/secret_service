@@ -86,4 +86,14 @@ describe SecretService::Store do
 
   end
 
+  describe '#set' do
+
+    it 'should set the final secret to a given value' do
+      source_secret = 'a6df546'
+      store.set(source_secret, 'final secret')
+      store.get(source_secret).should == 'final secret'
+    end
+
+  end
+
 end

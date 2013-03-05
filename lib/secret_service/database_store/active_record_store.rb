@@ -9,6 +9,8 @@ module SecretService
         else
           set_table_name TABLE_NAME
         end
+
+        validates_presence_of :key, :value
       end
 
 
@@ -29,6 +31,12 @@ module SecretService
         secret_record.value
       end
 
+      def update(key, value)
+        secret_record = find_if_present(key) || Secret.new(:key => key)
+        secret_record.value = value
+        secret_record.save!
+      end
+
       def drop_database
         # tests need this
         Secret.connection.drop_table TABLE_NAME
@@ -42,7 +50,7 @@ module SecretService
       def setup_database
         Secret.connection.create_table TABLE_NAME do |table|
           table.string :key
-          table.string :value
+          table.text :value
           table.timestamps
         end
         Secret.connection.add_index TABLE_NAME, :key, :unique => true
