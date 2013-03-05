@@ -5,6 +5,5 @@ gem 'rspec'
 gem 'rspec-rails'
 gem 'mysql2'
 gem 'ruby-debug', :platforms => :mri_18
-gem 'database_cleaner'
 
 gem 'secret_service', :path => '../..'
