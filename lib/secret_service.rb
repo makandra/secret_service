@@ -2,12 +2,8 @@ require "secret_service/version"
 require "secret_service/store"
 
 module SecretService
-  def self.secret(source_secret, options = {})
-    if options[:plain]
-      source_secret
-    else
-      @secrets ||= {}
-      @secrets[source_secret] ||= Store.instance.get(source_secret)
-    end
+  def self.secret(source_secret)
+    @secrets ||= {}
+    @secrets[source_secret] ||= Store.instance.get(source_secret)
   end
 end

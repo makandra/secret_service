@@ -15,10 +15,6 @@ describe SecretService do
       SecretService.secret('source secret')
     end
 
-    it 'should return the source secret if :plain is true' do
-      SecretService.secret('source secret', :plain => true).should == 'source secret'
-    end
-
   end
 
 end
