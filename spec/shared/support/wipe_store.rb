@@ -1,6 +1,6 @@
 module SecretServiceSpec
   def self.wipe_store
-    SecretService.instance_variable_set(:@secrets, nil)
+    SecretService.send(:reset)
     SecretService::DatabaseStore.get.drop_database
   end
 end

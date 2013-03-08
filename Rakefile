@@ -32,7 +32,7 @@ namespace :all do
   desc "Run specs on all spec apps"
   task :spec do
     success = true
-    for_each_directory_of('spec/**/Rakefile') do |directory|
+    for_each_directory_of('spec/*/Rakefile') do |directory|
       env = "SPEC=../../#{ENV['SPEC']} " if ENV['SPEC']
       success &= system("cd #{directory} && BUNDLE_GEMFILE=./Gemfile #{env} bundle exec rake spec")
     end

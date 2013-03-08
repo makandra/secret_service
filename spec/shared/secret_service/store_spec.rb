@@ -51,6 +51,19 @@ describe SecretService::Store do
       secret_record.value.size.should > 10
     end
 
+    context ':only_existing => true' do
+
+      it 'should not make a new secret' do
+        store.get('foobar', :only_existing => true).should be_nil
+      end
+
+      it 'should retrieve an existing secret' do
+        secret = store.get('foobar')
+        store.get('foobar', :only_existing => true).should == secret
+      end
+
+    end
+
     context 'concurrency' do
 
       def safe_fork
@@ -92,6 +105,18 @@ describe SecretService::Store do
       source_secret = 'a6df546'
       store.set(source_secret, 'final secret')
       store.get(source_secret).should == 'final secret'
+    end
+
+  end
+
+  describe '#generate_secret' do
+
+    it 'should return a random secret' do
+      store.generate_secret.should_not == store.generate_secret
+    end
+
+    it 'should return a long secret' do
+      store.generate_secret.size.should > 20
     end
 
   end
