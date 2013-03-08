@@ -32,6 +32,8 @@ To get a random secret, simply use
 
     SecretService.secret("dfa24decafdb058448ac1eadb94e2066381cb92ee301e5a43d556555b61c7ea599e06be870e1d90c655c1b56cea172622d2b04a5e986faed42cbae684c5523c9")
 
+You will probably want to use this in your `config/initializers/secret_token.rb` initializer.
+
 The database entries (and indeed tables) are created on demand.
 
 

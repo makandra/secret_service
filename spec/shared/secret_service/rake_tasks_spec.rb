@@ -4,16 +4,22 @@ require 'open3'
 describe 'Rake tasks' do
 
   def execute_rake(task, options = {})
-    env = ENV.to_hash
-    env.merge!('BUNDLE_GEMFILE' => File.expand_path(File.join(Rails.root, '..', 'Gemfile')))
-    env.merge!(options.fetch(:env, {}))
-    Open3.popen2(env, "bundle exec rake #{task}", :chdir => Rails.root) do |stdin, stdout, wait_thr|
+    env = "BUNDLE_GEMFILE=#{File.expand_path(File.join(Rails.root, '..', 'Gemfile'))}"
+    options.fetch(:env, {}).each do |key, value|
+      env << " #{key}=#{value}"
+    end
+    # this is the only way I could make it work in ruby 1.8 and 1.9
+    Open3.popen3("bash -c 'cd #{Rails.root}; #{env} bundle exec rake #{task}'") do |stdin, stdout, stderr, wait_thr|
       if options[:puts]
         stdin.puts options[:puts]
       end
       stdin.close
+      error = stderr.read
+      STDERR.puts error if error.present?
       stdout.read
     end
+  ensure
+    ActiveRecord::Base.connection.reconnect!
   end
 
 

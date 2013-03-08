@@ -59,7 +59,7 @@ describe SecretService::Store do
 
       it 'should retrieve an existing secret' do
         secret = store.get('foobar')
-        store.get('foobar', :only_existing => true).should == secret
+        store.get('foobar', :existing => true).should == secret
       end
 
     end

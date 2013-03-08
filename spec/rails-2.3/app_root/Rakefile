@@ -6,3 +6,5 @@ require 'rake/testtask'
 require 'tasks/rails'
 
 require 'secret_service/rake_tasks'
+
+load File.join(File.dirname(__FILE__), '..', '..', 'shared', 'support', 'reconnect_task.rake')
