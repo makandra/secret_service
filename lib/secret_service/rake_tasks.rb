@@ -19,21 +19,16 @@ namespace :secret_service do
   desc 'Show a previously stored secret'
   task :show => :environment do
     store = SecretService::Store.new
-    source_secret = ENV['SOURCE_SECRET']
+    puts "Enter source secret (as given in your source code):"
+    source_secret = STDIN.gets.chomp
 
-    if source_secret
-      secret = store.get(source_secret, :only_existing => true)
-      if secret
-        puts "Secret: ", secret
-      else
-        puts "Secret not stored"
-      end
-      puts
+    secret = store.get(source_secret, :only_existing => true)
+    if secret
+      puts "Secret: ", secret
     else
-      puts "Specify the given source secret with SOURCE_SECRET=..."
-      puts
-      fail
+      puts "Secret not stored"
     end
+    puts
   end
 
 end

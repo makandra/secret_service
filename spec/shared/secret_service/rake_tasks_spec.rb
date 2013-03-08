@@ -42,17 +42,17 @@ describe 'Rake tasks' do
 
     it 'should show a previously stored secret' do
       SecretService::Store.new.set('source_secret', 'secret_secret')
-      output = execute_rake('secret_service:show', :env => {'SOURCE_SECRET' => 'source_secret'})
+      output = execute_rake('secret_service:show', :puts => 'source_secret')
       output.should =~ /secret_secret/
     end
 
     it 'should not store a new secret' do
-      output = execute_rake('secret_service:show', :env => {'SOURCE_SECRET' => 'source_secret'})
+      output = execute_rake('secret_service:show', :puts => 'source_secret')
       SecretService::Store.new.get('source_secret', :only_existing => true).should be_nil
     end
 
     it 'should tell if the secret does not exist' do
-      output = execute_rake('secret_service:show', :env => {'SOURCE_SECRET' => 'source_secret'})
+      output = execute_rake('secret_service:show', :puts => 'source_secret')
       output.should =~ /Secret not stored/
     end
   end
