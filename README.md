@@ -55,6 +55,17 @@ To show a previously stored secret, use
 
 where `the_source_secret` is the secret used in the `SecretService.secret(...)` call
 
+## Capistrano integration
+
+To get capistrano integration, put this into your `config/deploy.rb`:
+
+    require 'secret_service/capistrano'
+
+You'll get the two rake tasks as corresponding capistrano tasks:
+
+    cap secret_service:store
+    cap secret_service:show
+
 ## Contributing
 
 1. Fork it
