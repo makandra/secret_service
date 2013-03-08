@@ -5,9 +5,6 @@ describe 'Rake tasks' do
 
   def execute_rake(task, options = {})
     env = "BUNDLE_GEMFILE=#{File.expand_path(File.join(Rails.root, '..', 'Gemfile'))}"
-    options.fetch(:env, {}).each do |key, value|
-      env << " #{key}=#{value}"
-    end
     # this is the only way I could make it work in ruby 1.8 and 1.9
     Open3.popen3("bash -c 'cd #{Rails.root}; #{env} bundle exec rake #{task}'") do |stdin, stdout, stderr, wait_thr|
       if options[:puts]
@@ -25,14 +22,20 @@ describe 'Rake tasks' do
 
   describe 'store' do
 
-    it 'should store the prompted secret under the given key' do
-      output = execute_rake('secret_service:store', :puts => 'the_secret')
+    it 'should store the prompted secret under the returned key' do
+      output = execute_rake('secret_service:store', :puts => "\nthe_secret")
       (output =~ /SecretService\.secret\("(.*)"\)/).should be_true
       SecretService.secret($1).should == 'the_secret'
     end
 
+    it 'should generate a sensible source secret' do
+      output = execute_rake('secret_service:store', :puts => "\nthe_secret")
+      (output =~ /SecretService\.secret\("(.*)"\)/).should be_true
+      $1.size.should > 20
+    end
+
     it 'should allow to set the source secret' do
-      output = execute_rake('secret_service:store', :env => {'SOURCE_SECRET' => 'source_secret'}, :puts => 'the_secret')
+      output = execute_rake('secret_service:store', :puts => "source_secret\nthe_secret")
       output.should =~ /SecretService\.secret\("source_secret"\)/
     end
 

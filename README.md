@@ -47,11 +47,11 @@ If you want to use a specific secret, you can put it into the database by callin
 
     rake secret_service:store
 
-The secret will be read from STDIN.
+The secret you'll put into your code as well as the final secret that will be returned are read from STDIN. You can leave the first one blank to have it generated automatically.
 
 To show a previously stored secret, use
 
-    rake secret_service:show SOURCE_SECRET=the_source_secret
+    rake secret_service:show
 
 where `the_source_secret` is the secret used in the `SecretService.secret(...)` call
 
