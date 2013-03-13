@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["tobias@kraze.eu"]
   gem.description   = %q{Secret service provides encryption of your application secrets with a server side master password}
   gem.summary       = gem.description
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/makandra/secret_service"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
