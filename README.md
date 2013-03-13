@@ -22,6 +22,8 @@ As a useful side effect, different environments (staging / production) will
 automatically have different secrets. You also cannot accidentally copy secrets
 from one project to another.
 
+SecretService will create a database table called "secret_service_secrets".
+This happens automatically on first use.
 
 ## Caveat
 
