@@ -1,3 +1,6 @@
+# This gem is no longer maintained.
+
+
 # SecretService
 
 SecretService allows you to store secrets in your Rails app (for example the
